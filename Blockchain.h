@@ -85,6 +85,16 @@ public:
     Blockchain() { this->emplace_back(BlockType(static_cast<T>(Allocator()), 0)); }
     Blockchain(T genesisTransaction) { this->emplace_back(BlockType(genesisTransaction, 0)); }
     
+    void push_back(const T& transaction)
+    {
+        this->emplace_back(BlockType(this->back().GetHash(), transaction));
+    }
+    
+    void push_back(T&& transaction)
+    {
+        this->emplace_back(BlockType(this->back().GetHash(), transaction));
+    }
+    
 };
 
 #endif //BLOCKCHAIN_BLOCKCHAIN_H
