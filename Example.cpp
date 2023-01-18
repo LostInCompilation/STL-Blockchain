@@ -65,15 +65,15 @@ int main()
     
     // Check chain
     if(blockchain.Check())
-        std::cout << "Blockchain checked. ALL GOOD" << std::endl;
+        std::cout << "Blockchain hashes checked. ALL GOOD" << std::endl;
     else
-        std::cout << "Blockchain checked. NOT VALID" << std::endl;
+        std::cout << "Blockchain hashes checked. NOT VALID" << std::endl;
     
     // Revalidate chain
     if(blockchain.Revalidate())
-        std::cout << "Blockchain revalidated. ALL GOOD" << std::endl;
+        std::cout << "Blockchain hashes and transactions revalidated. ALL GOOD" << std::endl;
     else
-        std::cout << "Blockchain revalidated. NOT VALID" << std::endl;
+        std::cout << "Blockchain hashes and transactions revalidated. NOT VALID" << std::endl;
     
     std::cout << std::endl << std::endl << std::endl;
     
