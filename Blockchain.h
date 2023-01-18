@@ -87,12 +87,62 @@ public:
     
     void push_back(const T& transaction)
     {
-        this->emplace_back(BlockType(this->back().GetHash(), transaction));
+        this->emplace_back(BlockType(transaction, this->back().GetHash()));
     }
     
     void push_back(T&& transaction)
     {
-        this->emplace_back(BlockType(this->back().GetHash(), transaction));
+        this->emplace_back(BlockType(transaction, this->back().GetHash()));
+    }
+    
+    bool Revalidate()
+    {
+        return Revalidate(this->begin(), this->end());
+    }
+    
+    bool Revalidate(iterator begin, iterator end)
+    {
+        iterator next = begin;
+        next++;
+        
+        while(next != end)
+        {
+            const uint64_t newHash = begin->CalculateHash();
+            
+            if(next->GetPreviousHash() != begin->GetHash()
+               || next->GetPreviousHash() != newHash
+               || newHash != begin->GetHash())
+            {
+                return false;
+            }
+            
+            begin++;
+            next++;
+        }
+        
+        return true;
+    }
+    
+    bool Check()
+    {
+        return Check(this->begin(), this->end());
+    }
+    
+    bool Check(iterator begin, iterator end)
+    {
+        iterator next = begin;
+        next++;
+        
+        while(next != end)
+        {
+            if(next->GetPreviousHash() != begin->GetHash())
+                return false;
+            
+            begin++;
+            next++;
+        }
+        
+        return true;
     }
     
 };
