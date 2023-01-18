@@ -38,10 +38,12 @@
 template <typename T, typename Hasher = std::hash<T>, typename Allocator = std::allocator<T>>
 class Block
 {
+public:
+    T transaction; // Exposed public for demonstrating blockchain manipulation. Make it private and const again when using
+    
 private:
     typedef typename decltype(std::function{Hasher()})::result_type HasherResultType;
     
-    const T transaction;
     const uint64_t prevHash;
     const uint64_t hash;
     
