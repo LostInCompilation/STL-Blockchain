@@ -35,9 +35,60 @@
 // Include the Blockchain container
 #include "Blockchain.h"
 
+template <typename T>
+class MyHashFunction
+{
+public:
+    std::string operator()(T input)
+    {
+        return "MyCalculatedHashFromInput";
+    }
+};
+
 int main()
 {
-    std::cout << "STL-Like Blockchain container - Example" << std::endl;
+    std::cout << "STL-Like Blockchain container - Example" << std::endl << std::endl;
+    
+    // *************************************************************************
+    // Blockchain test
+    // Create blockchain
+    Blockchain<std::string> blockchain("Genesis");
+    blockchain.push_back("Transaction 1");
+    blockchain.push_back("Transaction 2");
+    blockchain.push_back("Last transaction");
+    
+    for(auto& i : blockchain)
+        std::cout << i.GetTransaction() << ":\t" << i.GetHash() << std::endl;
+    
+    // Check chain
+    if(blockchain.Check())
+        std::cout << "Blockchain checked. ALL GOOD" << std::endl;
+    else
+        std::cout << "Blockchain checked. NOT VALID" << std::endl;
+    
+    // Revalidate chain
+    if(blockchain.Revalidate())
+        std::cout << "Blockchain revalidated. ALL GOOD" << std::endl;
+    else
+        std::cout << "Blockchain revalidated. NOT VALID" << std::endl;
+    
+    std::cout << std::endl << std::endl << std::endl;
+    
+    // *************************************************************************
+    // Custom hash function example
+    Blockchain<std::string, MyHashFunction<std::string>> customBlockchain("Genesis");
+    customBlockchain.push_back("Transaction 1");
+    customBlockchain.push_back("Transaction 2");
+    customBlockchain.push_back("Last transaction");
+    
+    for(auto& i : customBlockchain)
+        std::cout << i.GetTransaction() << ":\t" << i.GetHash() << std::endl;
+    
+    // Check chain
+    if(customBlockchain.Check())
+        std::cout << "CUSTOM Blockchain checked. ALL GOOD" << std::endl;
+    else
+        std::cout << "CUSTOM Blockchain checked. NOT VALID" << std::endl;
     
     return 0;
 }
