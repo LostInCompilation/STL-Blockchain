@@ -1,7 +1,7 @@
 # Blockchain C++ STL-Like Container
 
 ## Usage
-Include the `Blockchain.h` header.
+Include the `Blockchain.h` header. Requires C++20.
 
 ```cpp
 #include "Blockchain.h"
